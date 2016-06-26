@@ -1,7 +1,4 @@
-import AssemblyKeys._
-
 name := "twitter-streaming"
-//name := "Twitter Streaming Project"
 
 version := "1.0"
 
@@ -13,10 +10,6 @@ libraryDependencies ++= Seq(
    "org.apache.spark" %% "spark-streaming-twitter" % "1.4.1",
    "org.apache.spark" %% "spark-sql" % "1.6.1" % "provided"
 )
-
-//assemblyJarName in assembly := "twitter-streaming-assembly.jar"
-
-assemblySettings
 
 mergeStrategy in assembly := {
   case m if m.toLowerCase.endsWith("manifest.mf")          => MergeStrategy.discard
