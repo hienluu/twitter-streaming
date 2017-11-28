@@ -35,10 +35,11 @@ object TwitterStreamingApp {
     System.setProperty("twitter4j.oauth.accessToken", accessToken)
     System.setProperty("twitter4j.oauth.accessTokenSecret", accessTokenSecret)
 
-    val sparkConf = new SparkConf().setAppName("TwitterPopularTags")
+    //val sparkConf = new SparkConf().setAppName("TwitterPopularTags")
     // to run this application inside an IDE, comment out previous line and uncomment line below
-    //val sparkConf = new SparkConf().setAppName("TwitterPopularTags").setMaster("local[*]")
+    val sparkConf = new SparkConf().setAppName("TwitterPopularTags").setMaster("local[*]")
 
+ 
     val ssc = new StreamingContext(sparkConf, Seconds(2))
     val stream = TwitterUtils.createStream(ssc, None, filters)
 
@@ -50,6 +51,8 @@ object TwitterStreamingApp {
     val negativeWords = negWordsRDD.collect().toSet
     val stopWords = stopWordsRDD.collect().toSet
 
+    println("Spark version: " + ssc.sparkContext.version)
+    
     val englishTweets = stream.filter(status => status.getUser().getLang() == "en")
     
     val tweets = englishTweets.map(status => status.getText())
